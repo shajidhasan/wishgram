@@ -3,17 +3,13 @@ import TextToSvg from 'text-to-svg'
 import { openmojis } from 'openmoji'
 import { readFile } from 'fs/promises'
 
-const loadFont = async (link: string): Promise<TextToSvg> => {
-    return new Promise((resolve, reject) => {
-        TextToSvg.load(link, (err, textToSVG) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(textToSVG as TextToSvg);
-        });
-    });
-};
+// const normal = await TextToSvg.load('static/fonts/ChakraPetch-SemiBold.ttf')
+// const highlight = await TextToSvg.load('static/fonts/bungee-shade-latin-400-normal.woff')
+// const additional = await TextToSvg.load('static/fonts/BungeeHairline-Regular.ttf')
+
+const normal = TextToSvg.loadSync()
+const highlight = TextToSvg.loadSync()
+const additional = TextToSvg.loadSync()
 
 const wrapText = (input: string, characterLimit: number): string[] => {
     if (input.length <= characterLimit) {
@@ -47,16 +43,6 @@ const wrapText = (input: string, characterLimit: number): string[] => {
 };
 
 export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date: string = '', name: string = ''): Promise<ProcessedSVGs> => {
-    console.log("i'm here")
-    const normal = await loadFont('static/fonts/ChakraPetch-SemiBold.ttf')
-    // const normal = await TextToSvg.load('static/fonts/ChakraPetch-SemiBold.ttf')
-    const highlight = await loadFont('static/fonts/bungee-shade-latin-400-normal.woff')
-    // const highlight = await TextToSvg.load('static/fonts/bungee-shade-latin-400-normal.woff')
-    const additional = await loadFont('static/fonts/BungeeHairline-Regular.ttf')
-    // const additional = await TextToSvg.load('static/fonts/BungeeHairline-Regular.ttf')
-
-    console.log("loaded")
-
     const processedSVGs: ProcessedSVGs = {
         main: [],
         decorations: [],
