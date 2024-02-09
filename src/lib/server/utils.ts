@@ -1,7 +1,6 @@
 import type { ProcessedMessage, ProcessedSVGs } from '$lib/types'
 import TextToSvg from 'text-to-svg'
 import { openmojis } from 'openmoji'
-import { readFile } from 'fs/promises'
 
 // const normal = await TextToSvg.load('static/fonts/ChakraPetch-SemiBold.ttf')
 // const highlight = await TextToSvg.load('static/fonts/bungee-shade-latin-400-normal.woff')
@@ -100,7 +99,7 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
         const openmoji = openmojis.find(e => e.emoji === emoji);
 
         if (openmoji) {
-            const svg = await (await readFile(`static/emojis/${openmoji.hexcode}.svg`)).toString()
+            const svg = (await import(`$lib/assets/emojis/${openmoji.hexcode}.svg?raw`)).default
             processedSVGs.decorations.push(svg)
         }
     }
