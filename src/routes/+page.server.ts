@@ -6,6 +6,34 @@ import { fail } from "@sveltejs/kit";
 
 export const actions = {
     default: async ({ request }) => {
+        const processedMessage = {
+            "main": [
+                {
+                    "text": "Merry Christmas",
+                    "highlight": false
+                },
+                {
+                    "text": "Robert",
+                    "highlight": true
+                }
+            ],
+            "decorations": [
+                "🎄",
+                "🎅",
+                "🎁",
+                "🌟",
+                "❄️",
+                "☃️",
+                "🔔",
+                "😍",
+                "🥳",
+                "😄"
+            ],
+            "additional": "Hope Santa brings everything you wished for!"
+        }
+        const processedSVGs = await getProcessedSVGs(processedMessage)
+        return { processedSVGs }
+
         const body = await request.formData()
 
         const token = body.get('cf-turnstile-response')
