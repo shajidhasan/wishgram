@@ -24,6 +24,6 @@
 	<HighlightColor />
 	<PaperColor />
 	<Watermark />
-	<DonationMessage />
+	<!-- <DonationMessage /> -->
 	<DownloadShare on:download={onDownload} />
 </div>
