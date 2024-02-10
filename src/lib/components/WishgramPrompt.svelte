@@ -28,9 +28,9 @@
 	}
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
 	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</svelte:head>
+</svelte:head> -->
 
 <Card.Root class="mb-12 w-11/12 max-w-[32rem] shadow-lg md:mb-0">
 	<Card.Header>
@@ -38,9 +38,9 @@
 		<Card.Description>Generate a beautiful wish card in one click.</Card.Description>
 	</Card.Header>
 	<form use:enhance={abracadabra} method="post">
-		<div>
+		<!-- <div>
 			<div class="cf-turnstile" data-sitekey="0x4AAAAAAARe0g6HV1mKNslW"></div>
-		</div>
+		</div> -->
 		<Card.Content>
 			<div class="flex w-full flex-col gap-1.5">
 				<Label for="message">Type your wish/message</Label>

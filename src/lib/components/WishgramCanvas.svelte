@@ -6,7 +6,7 @@
 	import wishgramWatermark from '$lib/assets/wishgram-watermark.png'
 	import { processedSVGs, wishgramSettings } from '$lib/stores'
 	import { Stage, Layer, Image, Group, Rect, Text } from 'svelte-konva'
-	import { getPositions, getRoughDecorations, getRoughTexts } from '$lib/utils'
+	import { getPositions, getRoughDecorations, getRoughTexts } from '$lib/wishgram/rough'
 
 	export let stage: Konva.Stage
 	let stageParent: HTMLDivElement
