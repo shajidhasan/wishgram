@@ -35,7 +35,7 @@ export const getProcessedMessage = async (message: string, context: string) => {
     ]
 
     const parts = [
-        { text: "The input has a wish/message and a context. First, you'll identify ONE highlight of the message. It can be a name, or any special word. Then, you'll add an additional sentence based on the message and context. And then, you'll suggest some relevant emojis for decoration. Again, based on the message and context. Return your output in JSON format. The message is to be written on a card, so there is no need to use ending punctuation marks like period or exclamation." },
+        { text: "The input has a wish/message and a context. First, you'll identify ONE highlight of the message. It can be a name, or any special word. Then, you'll add an additional sentence based on the message and context. And then, you'll suggest some relevant emojis for decoration. Again, based on the message and context. Return your output in JSON format. The message is to be written on a card, so there is no need to use ending punctuation marks like period or exclamation. YOU MUST HAVE SOME DECORATIONS, DON'T KEEP DECORATIONS EMPTY." },
         { text: "input: message: \"happy birthday afsana\" context: \"she is my girlfriend\"" },
         { text: "output: {\"main\":[{\"text\":\"Happy Birthday\",\"highlight\":false},{\"text\":\"Afsana\",\"highlight\":true}],\"decorations\":[\"🎂\",\"❤️\",\"🍰\",\"😘\",\"🎉\",\"🎁\",\"🎈\",\"😘\",\"😄\",\"🙌🏼\"],\"additional\":\"Have the best birthday ever, my love.\"}" },
         { text: "input: message: \"get well soon, mahi\" context: \"mahi is my close friend\"" },
