@@ -30,7 +30,6 @@
 	const onFormResponse = async (form: ActionData) => {
 		if (!form) return
 		if (!form.processedMessage) return
-		console.log(form.processedMessage)
 		const processedSVGs_ = await getProcessedSVGs(form.processedMessage, form.processedMessage.date as string)
 		processedSVGs.set(processedSVGs_)
 		goto('/canvas')

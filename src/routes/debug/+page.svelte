@@ -8,7 +8,6 @@
         const blob = await res.blob()
         const buffer = await blob.arrayBuffer()
         const normal = TextToSVG.parse(buffer)
-        console.log(normal.getSVG("Hello", {fontSize: 20}))
     }
 </script>
 
