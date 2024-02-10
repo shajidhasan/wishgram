@@ -12,7 +12,17 @@
 	let processing = false
 	let moreOptions = false
 
-	const abracadabra: SubmitFunction = () => {
+	const abracadabra: SubmitFunction = ({formData, cancel}) => {
+		const message = formData.get('message')
+		if (!message) {
+			toast("No message written!")
+			return cancel()
+		}
+		if (message && message.toString().length < 4) {
+			toast("Message length too small")
+			return cancel()
+
+		}
 		processing = true
 		return async ({ result, update }) => {
 			if (result.type === 'failure' && result.data) {
