@@ -44,7 +44,7 @@
 		<Card.Content>
 			<div class="flex w-full flex-col gap-1.5">
 				<Label for="message">Type your wish/message</Label>
-				<Input type="text" id="message" name="message" maxlength={40} />
+				<Input type="text" id="message" name="message" minlength={5} maxlength={40} />
 				<p class="text-sm text-muted-foreground">Example: Happy birthday Afsana!</p>
 			</div>
 
