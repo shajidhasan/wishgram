@@ -1,3 +1,5 @@
+import type TextToSVG from "./wishgram/text-to-svg";
+
 export interface MessagePart {
     text: string;
     highlight: boolean;
@@ -25,3 +27,11 @@ export interface WishgramSettings {
     paperColor: string;
     wishgramWatermark: boolean;
 }
+
+
+export interface Fonts {
+    normal: TextToSVG;
+    highlight: TextToSVG;
+    additional: TextToSVG
+}
+

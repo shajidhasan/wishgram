@@ -1,38 +1,36 @@
 import { TURNSTILE_SECRET_KEY } from "$env/static/private";
 import { getProcessedMessage } from "$lib/server/gemini.js";
 import { record } from "$lib/server/pocketbase.js";
-import { getProcessedSVGs } from "$lib/server/utils.js";
 import { fail } from "@sveltejs/kit";
 
 export const actions = {
     default: async ({ request }) => {
-        const processedMessage = {
-            "main": [
-                {
-                    "text": "Merry Christmas",
-                    "highlight": false
-                },
-                {
-                    "text": "Robert",
-                    "highlight": true
-                }
-            ],
-            "decorations": [
-                "🎄",
-                "🎅",
-                "🎁",
-                "🌟",
-                "❄️",
-                "☃️",
-                "🔔",
-                "😍",
-                "🥳",
-                "😄"
-            ],
-            "additional": "Hope Santa brings everything you wished for!"
-        }
-        const processedSVGs = await getProcessedSVGs(processedMessage)
-        return { processedSVGs }
+        // const processedMessage = {
+        //     "main": [
+        //         {
+        //             "text": "Merry Christmas",
+        //             "highlight": false
+        //         },
+        //         {
+        //             "text": "Robert",
+        //             "highlight": true
+        //         }
+        //     ],
+        //     "decorations": [
+        //         "🎄",
+        //         "🎅",
+        //         "🎁",
+        //         "🌟",
+        //         "❄️",
+        //         "☃️",
+        //         "🔔",
+        //         "😍",
+        //         "🥳",
+        //         "😄"
+        //     ],
+        //     "additional": "Hope Santa brings everything you wished for!"
+        // }
+        // return { processedMessage }
 
         const body = await request.formData()
 
@@ -54,9 +52,8 @@ export const actions = {
             await record(body.get('message') as string, body.get('context') as string)
             try {
                 const processedMessage = await getProcessedMessage(body.get('message') as string, body.get('context') as string)
-                const processedSVGs = await getProcessedSVGs(processedMessage)
 
-                return { processedSVGs }
+                return { processedMessage }
             } catch (e) {
                 return fail(500, { message: "unknown error" })
             }

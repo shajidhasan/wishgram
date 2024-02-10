@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
+	import { shuffle } from '$lib/utils'
 	import { goto } from '$app/navigation'
-	import { shuffle } from '$lib/utils.js'
-	import type { ActionData } from './$types.js'
-	import { processedSVGs } from '$lib/stores.js'
+	import type { ActionData } from './$types'
+	import { processedSVGs } from '$lib/stores'
 	import { HERO_DECOR_LOCATIONS as locations } from '$lib'
 	import wishgramLogo from '$lib/assets/wishgram-logo.svg'
 	import Button from '$lib/components/ui/button/button.svelte'
+	import { getProcessedSVGs } from '$lib/wishgram/text-to-svg'
 	import WishgramPrompt from '$lib/components/WishgramPrompt.svelte'
 	const decorationImports = import.meta.glob('$lib/assets/decorations/*.svg', { eager: true })
 
@@ -26,10 +27,12 @@
 			.join(';')
 	}
 
-	const onFormResponse = (form: ActionData) => {
+	const onFormResponse = async (form: ActionData) => {
 		if (!form) return
-		if (!form.processedSVGs) return
-		processedSVGs.set(form.processedSVGs)
+		if (!form.processedMessage) return
+		console.log(form.processedMessage)
+		const processedSVGs_ = await getProcessedSVGs(form.processedMessage)
+		processedSVGs.set(processedSVGs_)
 		goto('/canvas')
 	}
 

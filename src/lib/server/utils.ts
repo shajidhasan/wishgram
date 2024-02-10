@@ -1,14 +1,7 @@
 import type { ProcessedMessage, ProcessedSVGs } from '$lib/types'
-import TextToSvg from 'text-to-svg'
+import TextToSvg from '$lib/wishgram/text-to-svg'
 import { openmojis } from 'openmoji'
-
-// const normal = await TextToSvg.load('static/fonts/ChakraPetch-SemiBold.ttf')
-// const highlight = await TextToSvg.load('static/fonts/bungee-shade-latin-400-normal.woff')
-// const additional = await TextToSvg.load('static/fonts/BungeeHairline-Regular.ttf')
-
-const normal = TextToSvg.loadSync()
-const highlight = TextToSvg.loadSync()
-const additional = TextToSvg.loadSync()
+import normalFontPath from '$lib/assets/fonts/ChakraPetch-SemiBold.ttf?url'
 
 const wrapText = (input: string, characterLimit: number): string[] => {
     if (input.length <= characterLimit) {
@@ -42,6 +35,11 @@ const wrapText = (input: string, characterLimit: number): string[] => {
 };
 
 export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date: string = '', name: string = ''): Promise<ProcessedSVGs> => {
+    // const buffer = Buffer.from(normalFontPath, 'utf8')
+    const normal = TextToSvg.loadSync(normalFontPath)
+    const highlight = TextToSvg.loadSync(normalFontPath)
+    const additional = TextToSvg.loadSync(normalFontPath)
+
     const processedSVGs: ProcessedSVGs = {
         main: [],
         decorations: [],
@@ -77,7 +75,7 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
         }
         processedSVGs.main.push({
             ...part,
-            code: (part.highlight ? highlight : normal).getSVG(part.text, { anchor: 'top', fontSize, attributes })
+            code: (part.highlight ? highlight : normal).getSVG(part.text, { fontSize, attributes })
         });
     })
 
@@ -91,7 +89,7 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
     additionalTexts.forEach(text => {
         processedSVGs.additional.push({
             text,
-            code: additional.getSVG(text, { anchor: 'top', fontSize })
+            code: additional.getSVG(text, { fontSize })
         })
     })
 
@@ -106,11 +104,11 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
 
 
     if (date) {
-        processedSVGs.date = additional.getSVG(date, { anchor: 'top', fontSize: 20 })
+        processedSVGs.date = additional.getSVG(date, { fontSize: 20 })
     }
 
     if (name) {
-        processedSVGs.name = additional.getSVG(name, { anchor: 'top', fontSize: 20 })
+        processedSVGs.name = additional.getSVG(name, { fontSize: 20 })
     }
 
     return processedSVGs
