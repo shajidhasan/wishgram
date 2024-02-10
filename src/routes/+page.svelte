@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { shuffle } from '$lib/utils'
+	import { getRandomEmojis, shuffle } from '$lib/utils'
 	import { goto } from '$app/navigation'
 	import type { ActionData } from './$types'
 	import { processedSVGs } from '$lib/stores'
@@ -30,6 +30,9 @@
 	const onFormResponse = async (form: ActionData) => {
 		if (!form) return
 		if (!form.processedMessage) return
+		if (form.processedMessage.decorations.length === 0) {
+			form.processedMessage.decorations = getRandomEmojis()
+		}
 		const processedSVGs_ = await getProcessedSVGs(form.processedMessage, form.processedMessage.date as string)
 		processedSVGs.set(processedSVGs_)
 		goto('/canvas')

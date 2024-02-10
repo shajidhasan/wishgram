@@ -73,3 +73,17 @@ export const shuffle = <T>(array: T[]): T[] => {
     return array;
 }
 
+export const getRandomEmojis = () => {
+    const emojis = ['😊', '🌟', '🎉', '🍕', '🚀', '🎈', '🌈', '❤️', '🍦', '🐱', '🌺', '🎸', '🌍', '📚', '🍀', '🎁', '🐾', '🍩', '🎤', '🕊️', '🍭', '🚲', '🏖️', '🍓', '🍔', '🎲', '🍇', '🎨', '🏰'];
+
+    const randomEmojis = [];
+
+    for (let i = 0; i < 8; i++) {
+        const randomIndex = Math.floor(Math.random() * emojis.length);
+        const randomEmoji = emojis.splice(randomIndex, 1)[0];
+        randomEmojis.push(randomEmoji);
+    }
+
+    return randomEmojis;
+}
+
