@@ -52,7 +52,7 @@
 				<div transition:slide class="flex flex-col gap-4 py-4">
 					<div class="flex w-full max-w-sm flex-col gap-1.5">
 						<Label for="context">Context</Label>
-						<Input type="text" id="context" />
+						<Input type="text" id="context" name="context"/>
 						<p class="text-sm text-muted-foreground">
 							Example: She is my best friend. She loves cats.
 						</p>
