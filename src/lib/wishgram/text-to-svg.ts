@@ -258,7 +258,5 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
         processedSVGs.name = additional.getSVG(name, { fontSize: 20 })
     }
 
-    console.log("things: ", processedSVGs.main)
-
     return processedSVGs
 }

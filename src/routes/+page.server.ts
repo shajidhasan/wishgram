@@ -53,7 +53,7 @@ export const actions = {
         try {
             const processedMessage = await getProcessedMessage(body.get('message') as string, body.get('context') as string)
 
-            return { processedMessage }
+            return { processedMessage: { ...processedMessage, date: body.get('date') } }
         } catch (e) {
             return fail(500, { message: "unknown error" })
         }

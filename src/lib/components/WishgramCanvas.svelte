@@ -34,10 +34,15 @@
 		decorationImages = getRoughDecorations(decorations)
 	}
 
+	const sketchOther = async (code: string) => {
+		const otherRough = getRoughTexts([{code}])
+		otherImages = otherRough.textImages
+	}
+
 	const setAttributes = async () => {
-		const mainPositions = getPositions(mainImages, -HEIGHT / 8)
+		const mainPositions = getPositions(mainImages, -HEIGHT / 10)
 		const additionalPositions = getPositions(additionalImages, HEIGHT / 8)
-		const otherPositions = getPositions(otherImages)
+		const otherPositions = getPositions(otherImages, HEIGHT / 2 - 100)
 
 		mainImages = mainImages.map((image, i) => ({
 			...image,
@@ -61,6 +66,7 @@
 		sketchMain($processedSVGs.main, $wishgramSettings.highlightColor)
 		sketchAdditional($processedSVGs.additional)
 		sketchDecorations($processedSVGs.decorations)
+		if ($processedSVGs.date) sketchOther($processedSVGs.date)
 		setAttributes()
 
 		await tick()
