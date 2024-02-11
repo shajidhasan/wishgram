@@ -55,16 +55,16 @@
 			<div class="flex w-full flex-col gap-1.5">
 				<Label for="message">Type your wish/message</Label>
 				<Input type="text" id="message" name="message" minlength={5} maxlength={40} />
-				<p class="text-sm text-muted-foreground">Example: Happy birthday Afsana!</p>
+				<p class="text-sm text-muted-foreground">Example: Happy birthday Robert!</p>
 			</div>
 
 			{#if moreOptions}
 				<div transition:slide class="flex flex-col gap-4 py-4">
 					<div class="flex w-full max-w-sm flex-col gap-1.5">
-						<Label for="context">Context</Label>
+						<Label for="context">More details</Label>
 						<Input type="text" id="context" name="context"/>
 						<p class="text-sm text-muted-foreground">
-							Example: She is my best friend. She loves cats.
+							Example: He loves cats.
 						</p>
 					</div>
 
