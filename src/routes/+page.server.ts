@@ -52,13 +52,12 @@ export const actions = {
         await record(body.get('message') as string, body.get('context') as string)
         try {
             const processedMessage = await getProcessedMessage(body.get('message') as string, body.get('context') as string)
-
+            if (!processedMessage || !processedMessage.main) {
+                return fail(400, { message: 'invalid message' })
+            }
             return { processedMessage: { ...processedMessage, date: body.get('date') } }
         } catch (e) {
-            return fail(500, { message: "unknown error" })
+            return fail(500, { message: 'API limit reached, please try again in a minute' })
         }
-        // } else {
-        //     return fail(498, { message: outcome['error-codes'][0] })
-        // }
     }
 }
