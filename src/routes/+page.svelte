@@ -14,7 +14,7 @@
 	export let form
 
 	let getStarted: HTMLElement
-	const names = shuffle(Object.keys(decorationImports))
+	const names = Object.keys(decorationImports)
 	const decorations = names.map((name) => (decorationImports[name] as { default: string }).default)
 
 	const onGetStarted = () => {
