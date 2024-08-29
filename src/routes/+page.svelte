@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { getRandomEmojis, shuffle } from '$lib/utils'
+	import { getRandomEmojis } from '$lib/utils'
 	import { goto } from '$app/navigation'
 	import type { ActionData } from './$types'
 	import { processedSVGs } from '$lib/stores'
