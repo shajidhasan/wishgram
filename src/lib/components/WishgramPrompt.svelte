@@ -12,16 +12,15 @@
 	let processing = false
 	let moreOptions = false
 
-	const abracadabra: SubmitFunction = ({formData, cancel}) => {
+	const abracadabra: SubmitFunction = ({ formData, cancel }) => {
 		const message = formData.get('message')
 		if (!message) {
-			toast("No message written!")
+			toast('No message written!')
 			return cancel()
 		}
 		if (message && message.toString().length < 4) {
-			toast("Message length too small")
+			toast('Message length too small')
 			return cancel()
-
 		}
 		processing = true
 		return async ({ result, update }) => {
@@ -38,19 +37,12 @@
 	}
 </script>
 
-<!-- <svelte:head>
-	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</svelte:head> -->
-
 <Card.Root class="mb-12 w-11/12 max-w-[32rem] shadow-lg md:mb-0">
 	<Card.Header>
 		<Card.Title>Create a wish</Card.Title>
 		<Card.Description>Generate a beautiful wish card in one click.</Card.Description>
 	</Card.Header>
 	<form use:enhance={abracadabra} method="post">
-		<!-- <div>
-			<div class="cf-turnstile" data-sitekey="0x4AAAAAAARe0g6HV1mKNslW"></div>
-		</div> -->
 		<Card.Content>
 			<div class="flex w-full flex-col gap-1.5">
 				<Label for="message">Type your wish/message</Label>
@@ -62,10 +54,8 @@
 				<div transition:slide class="flex flex-col gap-4 py-4">
 					<div class="flex w-full flex-col gap-1.5">
 						<Label for="context">More details</Label>
-						<Input type="text" id="context" name="context"/>
-						<p class="text-sm text-muted-foreground">
-							Example: He loves cats.
-						</p>
+						<Input type="text" id="context" name="context" />
+						<p class="text-sm text-muted-foreground">Example: He loves cats.</p>
 					</div>
 
 					<div class="flex w-full flex-col gap-1.5">

@@ -1,4 +1,3 @@
-// import { TURNSTILE_SECRET_KEY } from "$env/static/private";
 import { getProcessedMessage } from "$lib/server/gemini.js";
 import { record } from "$lib/server/pocketbase.js";
 import { fail } from "@sveltejs/kit";
