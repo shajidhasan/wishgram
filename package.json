@@ -42,6 +42,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/inter": "^5.0.20",
+		"@google/genai": "^1.13.0",
 		"@google/generative-ai": "^0.17.1",
 		"@internationalized/date": "^3.5.5",
 		"bits-ui": "^0.21.13",
@@ -49,7 +50,6 @@
 		"konva": "^9.3.14",
 		"lucide-svelte": "^0.436.0",
 		"opentype.js": "^1.3.4",
-		"pocketbase": "^0.21.5",
 		"svelte-konva": "^0.3.1",
 		"svelte-sonner": "^0.3.27",
 		"svg2roughjs": "^3.2.1",

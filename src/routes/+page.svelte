@@ -33,7 +33,10 @@
 		if (form.processedMessage.decorations.length === 0) {
 			form.processedMessage.decorations = getRandomEmojis()
 		}
-		const processedSVGs_ = await getProcessedSVGs(form.processedMessage, form.processedMessage.date as string)
+		const processedSVGs_ = await getProcessedSVGs(
+			form.processedMessage,
+			form.processedMessage.date as string
+		)
 		processedSVGs.set(processedSVGs_)
 		goto('/canvas')
 	}
@@ -48,14 +51,7 @@
 <main class="h-screen snap-y snap-mandatory overflow-y-scroll">
 	<section class="relative h-screen snap-start">
 		{#each decorations.slice(0, 6) as decoration, i}
-			<img
-				src={decoration}
-				alt="decoration"
-				class="absolute"
-				style={styleString(locations[i])}
-				style:transform="rotate({-15 + Math.random() * 30}deg)"
-				style:width="{4 + Math.random() * 1.5}rem"
-			/>
+			<img src={decoration} alt="decoration" class="absolute" style={styleString(locations[i])} />
 		{/each}
 		<div class="flex h-full flex-col items-center justify-center gap-4 px-4">
 			<img src={wishgramLogo} alt="Wishgram logo" class="h-32 w-32" />
@@ -82,8 +78,6 @@
 				alt="decoration"
 				class="absolute -z-10"
 				style={styleString(locations[5 + i])}
-				style:transform="rotate({-15 + Math.random() * 30}deg)"
-				style:width="{4 + Math.random() * 2}rem"
 			/>
 		{/each}
 		<div class="flex h-full min-h-[inherit] flex-col items-center justify-center">

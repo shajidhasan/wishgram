@@ -1,61 +1,78 @@
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
+import { GoogleGenAI } from "@google/genai"
 import { GEMINI_API_KEY } from "$env/static/private"
 import type { ProcessedMessage } from "$lib/types"
 
-const MODEL_NAME = "gemini-pro"
+// Updated to the new, faster model as requested
+const MODEL_NAME = "gemini-2.5-flash-lite"
 
-export const getProcessedMessage = async (message: string, context: string) => {
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME })
-
-    const generationConfig = {
-        temperature: 0.9,
-        topK: 1,
-        topP: 1,
-        maxOutputTokens: 2048,
-    }
-
-    const safetySettings = [
-        {
-            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold: HarmBlockThreshold.BLOCK_NONE,
+// OpenAPI 3.0 schema defining the expected JSON output structure.
+// This is used to enable the model's structured output mode.
+const responseSchema = {
+    type: "object",
+    properties: {
+        main: {
+            type: "array",
+            description: "The original message, split into parts. One part should be marked for highlight.",
+            items: {
+                type: "object",
+                properties: {
+                    text: { type: "string" },
+                    highlight: { type: "boolean" },
+                },
+                required: ["text", "highlight"],
+            },
         },
-        {
-            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            threshold: HarmBlockThreshold.BLOCK_NONE,
+        decorations: {
+            type: "array",
+            description: "A list of relevant emojis for decoration, based on the message and context.",
+            items: { type: "string" },
         },
-        {
-            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-            threshold: HarmBlockThreshold.BLOCK_NONE,
+        additional: {
+            type: "string",
+            description: "A creative, additional sentence based on the message and context. Should not have ending punctuation like a period.",
         },
-        {
-            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-            threshold: HarmBlockThreshold.BLOCK_NONE,
-        },
-    ]
+    },
+    required: ["main", "decorations", "additional"],
+}
 
-    const parts = [
-        { text: "The input has a wish/message and a context. First, you'll identify ONE highlight of the message. It can be a name, or any special word. Then, you'll add an additional sentence based on the message and context. And then, you'll suggest some relevant emojis for decoration. Again, based on the message and context. Return your output in JSON format. The message is to be written on a card, so there is no need to use ending punctuation marks like period or exclamation." },
-        { text: "input: message: \"happy birthday afsana\" context: \"she is my girlfriend\"" },
-        { text: "output: {\"main\":[{\"text\":\"Happy Birthday\",\"highlight\":false},{\"text\":\"Afsana\",\"highlight\":true}],\"decorations\":[\"🎂\",\"❤️\",\"🍰\",\"😘\",\"🎉\",\"🎁\",\"🎈\",\"😘\",\"😄\",\"🙌🏼\"],\"additional\":\"Have the best birthday ever, my love.\"}" },
-        { text: "input: message: \"get well soon, mahi\" context: \"mahi is my close friend\"" },
-        { text: "output: {\"main\":[{\"text\":\"Get well soon\",\"highlight\":false},{\"text\":\"Mahi\",\"highlight\":true}],\"decorations\":[\"💐\",\"😊\",\"☀\",\"💪\",\"🙌\",\"💊\",\"😊\",\"😎\",\"🌼\",\"🤞🏼\"],\"additional\":\"I hope you feel better soon, friend.\"}" },
-        { text: "input: message: \"eid mubarak to everyone\" context: \"\"" },
-        { text: "output: {\"main\":[{\"text\":\"Eid Mubarak\",\"highlight\":true},{\"text\":\"to everyone\",\"highlight\":false}],\"decorations\":[\"🌙\",\"🕌\",\"✨\",\"🎉\",\"🎊\",\"🎁\",\"💐\",\"🥳\",\"😄\",\"🤲🏼\"],\"additional\":\"May this Eid bring happiness to all.\"}" },
-        { text: "input: message: \"merry christmas, robert!\" context: \"\"" },
-        { text: "output: {\"main\":[{\"text\":\"Merry Christmas\",\"highlight\":false},{\"text\":\"Robert\",\"highlight\":true}],\"decorations\":[\"🎄\",\"🎅\",\"🎁\",\"🌟\",\"❄️\",\"☃️\",\"🔔\",\"😍\",\"🥳\",\"😄\"],\"additional\":\"Hope Santa brings everything you wished for!\"}" },
-        { text: "input: message: \"happy birthday sadman!\" context: \"sadman is a friend who is very funny, and loves kittens\"" },
-        { text: "output: {\"main\":[{\"text\":\"Happy Birthday\",\"highlight\":false},{\"text\":\"Sadman\",\"highlight\":true}],\"decorations\":[\"🎂\",\"🎉\",\"🎈\",\"🎁\",\"🍰\",\"😸\",\"😻\",\"🐈\",\"😄\",\"🥳\"],\"additional\":\"May your special day be filled with laughter and cute kittens.\"}" },
-        { text: `input: message: "${message}" context: "${context}"` },
-        { text: "output: " },
-    ]
+export const getProcessedMessage = async (message: string, context: string): Promise<ProcessedMessage> => {
+    // Initialize the new GoogleGenAI client
+    const genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY })
 
-    const result = await model.generateContent({
-        contents: [{ role: "user", parts }],
-        generationConfig,
-        safetySettings,
+    // A clear system instruction that tells the model its role and task.
+    const systemInstruction =
+        "You are an assistant that processes wishes for greeting cards. Based on a message and its context, you will: " +
+        "1. Split the message into parts, identifying one key part to highlight (like a name or special phrase). " +
+        "2. Write a creative, additional sentence that fits the message and context. " +
+        "3. Suggest a list of relevant emojis for decoration. " +
+        "The message is for a card, so avoid ending punctuation like periods or exclamation marks in the additional sentence."
+
+    // The user's specific input, now cleanly separated from instructions.
+    const userPrompt = `Message: "${message}"\nContext: "${context}"`
+
+    const result = await genAI.models.generateContent({
+        model: MODEL_NAME,
+        config: {
+            systemInstruction: systemInstruction,
+            responseMimeType: "application/json",
+            responseSchema: responseSchema,
+        },
+        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
     })
 
-    const response = result.response
-    return JSON.parse(response.text()) as ProcessedMessage
+    const response = result.text
+
+    // The model is constrained to return a valid JSON string by the schema,
+    // which we can now safely parse.
+    if (!response) {
+        // Return a ProcessedMessage with error info
+        return {
+            main: [
+                { text: "Sorry, there was an error processing your message.", highlight: false }
+            ],
+            decorations: [],
+            additional: "Could not process the message"
+        }
+    }
+    return JSON.parse(response) as ProcessedMessage
 }
