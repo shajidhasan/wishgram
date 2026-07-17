@@ -1,6 +1,6 @@
 <script>
 	import '@fontsource-variable/inter'
-	import '../app.pcss'
+	import '../app.css'
 	import { Toaster } from '$lib/components/ui/sonner'
 	/**
 	 * @typedef {Object} Props
