@@ -98,6 +98,101 @@
 	}
 }
 
+@theme {
+	--animate-pop: pop 200ms ease-out;
+
+	@keyframes pop {
+		50% {
+			scale: 1.08;
+		}
+	}
+}
+
+/* Motion polish — every rule is gated on prefers-reduced-motion */
+@media (prefers-reduced-motion: no-preference) {
+	@keyframes fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+	}
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+	@keyframes float {
+		from {
+			translate: 0 -3px;
+		}
+		to {
+			translate: 0 3px;
+		}
+	}
+
+	.animate-fade-up {
+		animation: fade-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+		animation-delay: var(--enter-delay, 0ms);
+	}
+
+	/* hero doodles: fade in staggered, then float forever; rotation stays on
+	   the inline transform, float uses the separate translate property */
+	.animate-deco-in {
+		animation:
+			fade-in 0.6s ease-out both,
+			float 5s ease-in-out infinite alternate;
+		animation-delay: var(--enter-delay, 0ms), 0ms;
+	}
+
+	.settings-enter > * {
+		animation: fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+	.settings-enter > :nth-child(2) {
+		animation-delay: 40ms;
+	}
+	.settings-enter > :nth-child(3) {
+		animation-delay: 80ms;
+	}
+	.settings-enter > :nth-child(4) {
+		animation-delay: 120ms;
+	}
+	.settings-enter > :nth-child(5) {
+		animation-delay: 160ms;
+	}
+	.settings-enter > :nth-child(6) {
+		animation-delay: 200ms;
+	}
+	.settings-enter > :nth-child(7) {
+		animation-delay: 240ms;
+	}
+
+	.press-effect {
+		transition: scale 150ms ease;
+	}
+	.press-effect:active {
+		scale: 0.97;
+	}
+
+	/* page transitions (View Transitions API) */
+	@keyframes vt-fade-out {
+		to {
+			opacity: 0;
+		}
+	}
+	@keyframes vt-fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+	}
+	::view-transition-old(root) {
+		animation: vt-fade-out 180ms ease both;
+	}
+	::view-transition-new(root) {
+		animation: vt-fade-up 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+}
+
 @layer base {
 	/* Tailwind v4 parity: v3 defaulted border color to the theme's border token */
 	*,

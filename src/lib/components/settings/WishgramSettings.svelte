@@ -11,7 +11,9 @@
 	let { ondownload }: { ondownload?: () => void } = $props()
 </script>
 
-<div class="flex flex-col gap-6 p-6 shadow-xl md:p-4 lg:h-full lg:shrink-0 lg:overflow-y-auto">
+<div
+	class="settings-enter flex flex-col gap-6 p-6 shadow-xl md:p-4 lg:h-full lg:shrink-0 lg:overflow-y-auto"
+>
 	<a href="/">
 		<img src={wishgramLogo} alt="Wishgram Logo" class="w-12 lg:w-20" />
 	</a>

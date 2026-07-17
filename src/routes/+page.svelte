@@ -53,23 +53,37 @@
 <main class="h-screen snap-y snap-mandatory overflow-y-scroll">
 	<section class="relative h-screen snap-start">
 		{#each decorations.slice(0, 6) as decoration, i}
-			<img src={decoration} alt="decoration" class="absolute" style={styleString(locations[i])} />
+			<img
+				src={decoration}
+				alt="decoration"
+				class="animate-deco-in absolute"
+				style="{styleString(locations[i])};--enter-delay:{300 + i * 70}ms"
+			/>
 		{/each}
 		<div class="flex h-full flex-col items-center justify-center gap-4 px-4">
-			<img src={wishgramLogo} alt="Wishgram logo" class="h-32 w-32" />
+			<img src={wishgramLogo} alt="Wishgram logo" class="animate-fade-up h-32 w-32" />
 
-			<h1 class="text-center text-3xl font-extrabold sm:text-4xl md:text-6xl">
+			<h1
+				class="animate-fade-up text-center text-3xl font-extrabold sm:text-4xl md:text-6xl"
+				style="--enter-delay:80ms"
+			>
 				Express Kindness.
 				<br />
 				Inspire Celebrations.
 			</h1>
 
-			<p class="max-w-xl text-center">
+			<p class="animate-fade-up max-w-xl text-center" style="--enter-delay:160ms">
 				Connect through Wishgram, crafting personalized wish cards for every occasion with an artful
 				handwritten touch. Powered by AI.
 			</p>
 
-			<Button onclick={onGetStarted}>Get Started</Button>
+			<Button
+				onclick={onGetStarted}
+				class="animate-fade-up"
+				style="--enter-delay:240ms"
+			>
+				Get Started
+			</Button>
 		</div>
 	</section>
 
@@ -78,8 +92,8 @@
 			<img
 				src={decoration}
 				alt="decoration"
-				class="absolute -z-10"
-				style={styleString(locations[5 + i])}
+				class="animate-deco-in absolute -z-10"
+				style="{styleString(locations[5 + i])};--enter-delay:{100 + i * 70}ms"
 			/>
 		{/each}
 		<div class="flex h-full min-h-[inherit] flex-col items-center justify-center">

@@ -2,6 +2,7 @@
 	import Konva from 'konva'
 	import { HEIGHT, WIDTH } from '$lib'
 	import { onMount, tick, untrack } from 'svelte'
+	import { prefersReducedMotion } from 'svelte/motion'
 	import type { MessagePart } from '$lib/types'
 	import wishgramWatermark from '$lib/assets/wishgram-watermark.png'
 	import { appState } from '$lib/state.svelte'
@@ -77,6 +78,23 @@
 
 		await tick()
 		paperComponent?.node.cache()
+		revealCanvas()
+	}
+
+	// staggered sketch-in: every layer above the paper fades and drifts in
+	const revealCanvas = () => {
+		if (!stage || prefersReducedMotion.current) return
+		for (const [i, layer] of stage.getLayers().slice(1).entries()) {
+			layer.opacity(0)
+			layer.y(10)
+			layer.to({
+				opacity: 1,
+				y: 0,
+				duration: 0.35,
+				delay: 0.1 + i * 0.08,
+				easing: Konva.Easings.EaseOut
+			})
+		}
 	}
 
 	const updatePaper = async (_paperColor: string) => {
