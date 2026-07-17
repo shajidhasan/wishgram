@@ -1,4 +1,5 @@
 import opentype from "opentype.js";
+import { base } from "$app/paths"
 import { ensureFonts } from "$lib/fonts"
 import type { ProcessedMessage, ProcessedSVGs } from "$lib/types"
 
@@ -229,19 +230,18 @@ export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date:
         })
     })
 
-    for (const emoji of processedMessage.decorations) {
-        const hexCodes = getEmojiHexCodes(emoji)
-
-        for (const hexCode of hexCodes) {
-            try {
-                const svg = (await import(`$lib/assets/emojis/${hexCode}.svg?raw`)).default
-                processedSVGs.decorations.push(svg)
-                break
-            } catch (e) {
-                // pass
+    // emoji SVGs live in static/ so the 4000+ files stay off the build graph;
+    // fetched in parallel, first matching hex-code variant wins
+    const decorationSVGs = await Promise.all(
+        processedMessage.decorations.map(async (emoji) => {
+            for (const hexCode of getEmojiHexCodes(emoji)) {
+                const res = await fetch(`${base}/emojis/${hexCode}.svg`)
+                if (res.ok) return await res.text()
             }
-        }
-    }
+            return null
+        })
+    )
+    processedSVGs.decorations = decorationSVGs.filter((svg): svg is string => svg !== null)
 
 
     if (date) {
