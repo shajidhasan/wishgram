@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toaster as Sonner, type ToasterProps as SonnerProps } from 'svelte-sonner'
 
-	let { ...rest }: SonnerProps = $props();
+	let { ...rest }: SonnerProps = $props()
 </script>
 
 <Sonner

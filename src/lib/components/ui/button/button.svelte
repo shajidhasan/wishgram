@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import { buttonVariants, type Props } from ".";
+	import { cn } from '$lib/utils'
+	import { buttonVariants, type Props } from '.'
 
 	let {
 		class: className,
-		variant = "default",
-		size = "default",
+		variant = 'default',
+		size = 'default',
 		href = undefined,
-		type = "button",
+		type = 'button',
 		children,
 		...rest
-	}: Props = $props();
+	}: Props = $props()
 </script>
 
 {#if href}

@@ -157,7 +157,7 @@
 			</Layer>
 			<Layer>
 				<Group>
-					{#each otherImages as image}
+					{#each otherImages as image, i (i)}
 						<Image {...image} draggable staticConfig />
 					{/each}
 				</Group>
@@ -174,20 +174,20 @@
 					scaleX={0.8}
 					scaleY={0.8}
 				>
-					{#each decorationImages as image}
+					{#each decorationImages as image, i (i)}
 						<Image {...image} staticConfig />
 					{/each}
 				</Group>
 			</Layer>
 			<Layer>
 				<Group>
-					{#each mainImages as image}
+					{#each mainImages as image, i (i)}
 						<Image {...image} staticConfig />
 					{/each}
 				</Group>
 
 				<Group>
-					{#each additionalImages as image}
+					{#each additionalImages as image, i (i)}
 						<Image {...image} staticConfig />
 					{/each}
 				</Group>

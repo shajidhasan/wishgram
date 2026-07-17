@@ -13,13 +13,7 @@
 		[key: string]: unknown
 	}
 
-	let {
-		class: className,
-		variant = 'default',
-		value,
-		children,
-		...rest
-	}: Props = $props();
+	let { class: className, variant = 'default', value, children, ...rest }: Props = $props()
 
 	const ctx = getToggleGroupCtx()
 </script>

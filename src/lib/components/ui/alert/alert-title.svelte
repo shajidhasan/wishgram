@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { cn } from "$lib/utils";
-	import type { HTMLAttributes } from "svelte/elements";
-	import type { HeadingLevel } from ".";
+	import { cn } from '$lib/utils'
+	import type { HTMLAttributes } from 'svelte/elements'
+	import type { HeadingLevel } from '.'
 
 	type $$Props = HTMLAttributes<HTMLHeadingElement> & {
-		level?: HeadingLevel;
-	};
-
-	interface Props {
-		class?: $$Props["class"];
-		level?: $$Props["level"];
-		children?: import('svelte').Snippet;
-		[key: string]: any
+		level?: HeadingLevel
 	}
 
-	let { class: className = undefined, level = "h5", children, ...rest }: Props = $props();
-	
+	interface Props {
+		class?: $$Props['class']
+		level?: $$Props['level']
+		children?: import('svelte').Snippet
+		[key: string]: unknown
+	}
+
+	let { class: className = undefined, level = 'h5', children, ...rest }: Props = $props()
 </script>
 
 <svelte:element
 	this={level}
-	class={cn("mb-1 font-medium leading-none tracking-tight", className)}
+	class={cn('mb-1 leading-none font-medium tracking-tight', className)}
 	{...rest}
 >
 	{@render children?.()}

@@ -20,7 +20,7 @@
 		value = $bindable(),
 		children,
 		...rest
-	}: Props = $props();
+	}: Props = $props()
 
 	// svelte-ignore state_referenced_locally
 	setToggleGroupCtx({ variant })

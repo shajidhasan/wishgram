@@ -18,7 +18,7 @@
 		pressed = $bindable(false),
 		children,
 		...rest
-	}: Props = $props();
+	}: Props = $props()
 </script>
 
 <TogglePrimitive.Root bind:pressed class={cn(toggleVariants({ variant }), className)} {...rest}>

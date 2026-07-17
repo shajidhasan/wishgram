@@ -52,7 +52,7 @@
 
 <main class="h-screen snap-y snap-mandatory overflow-y-scroll">
 	<section class="relative h-screen snap-start">
-		{#each decorations.slice(0, 6) as decoration, i}
+		{#each decorations.slice(0, 6) as decoration, i (i)}
 			<img
 				src={decoration}
 				alt="decoration"
@@ -77,18 +77,14 @@
 				handwritten touch. Powered by AI.
 			</p>
 
-			<Button
-				onclick={onGetStarted}
-				class="animate-fade-up"
-				style="--enter-delay:240ms"
-			>
+			<Button onclick={onGetStarted} class="animate-fade-up" style="--enter-delay:240ms">
 				Get Started
 			</Button>
 		</div>
 	</section>
 
 	<section bind:this={getStarted} class="relative min-h-screen snap-start">
-		{#each decorations.slice(6, 11) as decoration, i}
+		{#each decorations.slice(6, 11) as decoration, i (i)}
 			<img
 				src={decoration}
 				alt="decoration"

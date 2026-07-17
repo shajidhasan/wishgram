@@ -21,7 +21,7 @@
 		variant="outline"
 		class="justify-start"
 	>
-		{#each colors as color}
+		{#each colors as color (color.code)}
 			<ToggleGroup.Item value={color.code} aria-label={color.name} class="p-2">
 				<div class="h-8 w-8 rounded {color.className}"></div>
 			</ToggleGroup.Item>
