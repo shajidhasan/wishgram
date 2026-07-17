@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Coffee } from 'lucide-svelte'
+	import { Coffee } from '@lucide/svelte'
 	import * as Card from '$lib/components/ui/card'
 	import { Button } from '$lib/components/ui/button'
 </script>

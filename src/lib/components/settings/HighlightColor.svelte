@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { wishgramSettings } from '$lib/stores'
+	import { appState } from '$lib/state.svelte'
 	import * as ToggleGroup from '$lib/components/ui/toggle-group'
 	import { Label } from '../ui/label'
 
@@ -15,7 +15,7 @@
 <div class="flex w-full max-w-sm flex-col gap-1.5">
 	<Label for="highlight">Highlight color</Label>
 	<ToggleGroup.Root
-		bind:value={$wishgramSettings.highlightColor}
+		bind:value={appState.settings.highlightColor}
 		id="highlight"
 		type="single"
 		variant="outline"

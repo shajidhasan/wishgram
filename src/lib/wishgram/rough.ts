@@ -8,7 +8,8 @@ export const getRoughTexts = (texts: { code: string, highlight?: boolean }[], hi
     const serializer = new XMLSerializer()
 
     const textImages = []
-    const texts_ = structuredClone(texts)
+    // plain clone: structuredClone chokes on Svelte $state proxies
+    const texts_ = texts.map((text) => ({ ...text }))
 
     for (const text of texts_) {
         let type = 'main'

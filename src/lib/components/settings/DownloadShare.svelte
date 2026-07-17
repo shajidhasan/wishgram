@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button'
-	import { Download } from 'lucide-svelte'
-	import { createEventDispatcher } from 'svelte'
+	import { Download } from '@lucide/svelte'
 
-	const dispatch = createEventDispatcher()
-
-	const onDownload = () => {
-		dispatch('download')
-	}
+	let { ondownload }: { ondownload?: () => void } = $props()
 </script>
 
 <div class="flex justify-end">
-	<Button on:click={onDownload}>
+	<Button onclick={ondownload}>
 		<Download class="mr-2 h-4 w-4" />
 		<span>Download</span>
 	</Button>

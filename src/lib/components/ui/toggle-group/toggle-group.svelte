@@ -1,28 +1,36 @@
 <script lang="ts">
-	import type { VariantProps } from 'tailwind-variants'
 	import { ToggleGroup as ToggleGroupPrimitive } from 'bits-ui'
-	import type { toggleVariants } from '$lib/components/ui/toggle'
-	import { setToggleGroupCtx } from '.'
+	import type { Snippet } from 'svelte'
+	import { setToggleGroupCtx, type ToggleVariants } from '.'
 	import { cn } from '$lib/utils'
 
-	type T = $$Generic<'single' | 'multiple'>
-	type $$Props = ToggleGroupPrimitive.Props<T> & VariantProps<typeof toggleVariants>
+	// the app only uses single-value groups; typing this directly sidesteps
+	// bits-ui's single/multiple union which breaks bind:value inference
+	type Props = {
+		class?: string | null
+		variant?: ToggleVariants['variant']
+		value?: string
+		children?: Snippet
+		[key: string]: unknown
+	}
 
-	let className: string | undefined | null = undefined
-	export { className as class }
-	export let variant: $$Props['variant'] = 'default'
-	export let value: $$Props['value'] = undefined
+	let {
+		class: className,
+		variant = 'default',
+		value = $bindable(),
+		children,
+		...rest
+	}: Props = $props();
 
-	setToggleGroupCtx({
-		variant
-	})
+	// svelte-ignore state_referenced_locally
+	setToggleGroupCtx({ variant })
 </script>
 
 <ToggleGroupPrimitive.Root
+	type="single"
 	class={cn('flex items-center justify-center gap-1', className)}
 	bind:value
-	{...$$restProps}
-	let:builder
+	{...rest}
 >
-	<slot {builder} />
+	{@render children?.()}
 </ToggleGroupPrimitive.Root>

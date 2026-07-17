@@ -3,22 +3,21 @@
 	import { getRandomEmojis } from '$lib/utils'
 	import { goto } from '$app/navigation'
 	import type { ActionData } from './$types'
-	import { processedSVGs } from '$lib/stores'
+	import { appState } from '$lib/state.svelte'
 	import { HERO_DECOR_LOCATIONS as locations } from '$lib'
 	import wishgramLogo from '$lib/assets/wishgram-logo.svg'
 	import Button from '$lib/components/ui/button/button.svelte'
-	import { getProcessedSVGs } from '$lib/wishgram/text-to-svg'
 	import WishgramPrompt from '$lib/components/WishgramPrompt.svelte'
 	const decorationImports = import.meta.glob('$lib/assets/decorations/*.svg', { eager: true })
 
-	export let form
+	let { form }: { form: ActionData } = $props()
 
-	let getStarted: HTMLElement
+	let getStarted: HTMLElement | undefined = $state()
 	const names = Object.keys(decorationImports)
 	const decorations = names.map((name) => (decorationImports[name] as { default: string }).default)
 
 	const onGetStarted = () => {
-		getStarted.scrollIntoView({ behavior: 'smooth' })
+		getStarted?.scrollIntoView({ behavior: 'smooth' })
 	}
 
 	const styleString = (style: Record<string, string>) => {
@@ -33,15 +32,18 @@
 		if (form.processedMessage.decorations.length === 0) {
 			form.processedMessage.decorations = getRandomEmojis()
 		}
-		const processedSVGs_ = await getProcessedSVGs(
+		// loaded on demand so opentype.js stays out of the landing chunk
+		const { getProcessedSVGs } = await import('$lib/wishgram/text-to-svg')
+		appState.processedSVGs = await getProcessedSVGs(
 			form.processedMessage,
 			form.processedMessage.date as string
 		)
-		processedSVGs.set(processedSVGs_)
 		goto('/canvas')
 	}
 
-	$: onFormResponse(form)
+	$effect(() => {
+		onFormResponse(form)
+	})
 
 	onMount(() => {
 		window.onbeforeunload = null
@@ -67,7 +69,7 @@
 				handwritten touch. Powered by AI.
 			</p>
 
-			<Button on:click={onGetStarted}>Get Started</Button>
+			<Button onclick={onGetStarted}>Get Started</Button>
 		</div>
 	</section>
 

@@ -7,10 +7,11 @@
 	import Button from './ui/button/button.svelte'
 	import * as Card from '$lib/components/ui/card'
 	import type { SubmitFunction } from '@sveltejs/kit'
-	import { Eye, EyeOff, Loader, Wand } from 'lucide-svelte'
+	import { Eye, EyeOff, Loader, Wand } from '@lucide/svelte'
+	import { ensureFonts } from '$lib/fonts'
 
-	let processing = false
-	let moreOptions = false
+	let processing = $state(false)
+	let moreOptions = $state(false)
 
 	const abracadabra: SubmitFunction = ({ formData, cancel }) => {
 		const message = formData.get('message')
@@ -22,6 +23,8 @@
 			toast('Message length too small')
 			return cancel()
 		}
+		// start fetching/parsing fonts while the AI request is in flight
+		ensureFonts()
 		processing = true
 		return async ({ result, update }) => {
 			if (result.type === 'failure' && result.data) {
@@ -69,7 +72,7 @@
 
 		<Card.Footer class="flex justify-between">
 			<Button
-				on:click={() => {
+				onclick={() => {
 					moreOptions = !moreOptions
 				}}
 				variant={moreOptions ? 'secondary' : 'outline'}

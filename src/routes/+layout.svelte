@@ -2,7 +2,14 @@
 	import '@fontsource-variable/inter'
 	import '../app.pcss'
 	import { Toaster } from '$lib/components/ui/sonner'
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { children } = $props();
 </script>
 
 <Toaster />
-<slot />
+{@render children?.()}

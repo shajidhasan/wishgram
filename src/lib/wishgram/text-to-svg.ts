@@ -1,7 +1,6 @@
 import opentype from "opentype.js";
-import { fonts } from "$lib/stores"
+import { ensureFonts } from "$lib/fonts"
 import type { ProcessedMessage, ProcessedSVGs } from "$lib/types"
-import { get } from "svelte/store"
 
 
 
@@ -24,10 +23,6 @@ export default class TextToSVG {
 
     static parse(file: ArrayBuffer) {
         return new TextToSVG(opentype.parse(file));
-    }
-
-    static loadSync(file: string) {
-        return new TextToSVG(opentype.loadSync(file));
     }
 
     getWidth(text: string, options: FontOptions) {
@@ -179,8 +174,7 @@ const wrapText = (input: string, characterLimit: number): string[] => {
 }
 
 export const getProcessedSVGs = async (processedMessage: ProcessedMessage, date: string = '', name: string = ''): Promise<ProcessedSVGs> => {
-    const fonts_ = get(fonts)
-    const { normal, highlight, additional } = fonts_
+    const { normal, highlight, additional } = await ensureFonts()
 
     const processedSVGs: ProcessedSVGs = {
         main: [],

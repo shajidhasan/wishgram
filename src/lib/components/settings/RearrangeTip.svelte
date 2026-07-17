@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Alert from '$lib/components/ui/alert'
-	import { Pointer } from 'lucide-svelte'
+	import { Pointer } from '@lucide/svelte'
 </script>
 
 <Alert.Root>

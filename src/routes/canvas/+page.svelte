@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type Konva from 'konva'
 	import { goto } from '$app/navigation'
-	import { processedSVGs } from '$lib/stores'
+	import { appState } from '$lib/state.svelte'
 	import WishgramCanvas from '$lib/components/WishgramCanvas.svelte'
 	import WishgramSettings from '$lib/components/settings/WishgramSettings.svelte'
 
-	let stage: Konva.Stage
+	let stage: Konva.Stage | undefined = $state()
 
-	if (!$processedSVGs) {
+	if (!appState.processedSVGs) {
 		goto('/')
 	}
 
@@ -16,6 +16,7 @@
 	}
 
 	const onDownload = () => {
+		if (!stage) return
 		const width = stage.width()
 		const uri = stage.toDataURL({ pixelRatio: 1200 / width })
 		const link = document.createElement('a')
@@ -27,6 +28,6 @@
 </script>
 
 <main class="flex flex-col-reverse lg:h-screen lg:flex-row">
-	<WishgramSettings on:download={onDownload} />
+	<WishgramSettings ondownload={onDownload} />
 	<WishgramCanvas bind:stage />
 </main>
