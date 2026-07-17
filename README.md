@@ -7,26 +7,27 @@ Wishgram is a web application that allows you to generate personalized handwritt
 To get Wishgram up and running on your local machine, follow these steps:
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/shajidhasan/wishgram.git
    cd wishgram
    ```
 
 2. **Install Dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Set Up Environment Variables**:
-    * Rename the `.env.example` file to `.env`
-    * Input your Gemini AI API key. You can acquire it for free.
+   - Rename the `.env.example` file to `.env`
+   - Input your Gemini AI API key. You can acquire it for free.
 
 4. **Run the Development Server**:
    ```bash
    npm run dev
    ```
    The application should now be running locally.
-
 
 ## License
 

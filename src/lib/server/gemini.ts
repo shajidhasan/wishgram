@@ -2,8 +2,8 @@ import { GoogleGenAI } from "@google/genai"
 import { GEMINI_API_KEY } from "$env/static/private"
 import type { ProcessedMessage } from "$lib/types"
 
-// Updated to the new, faster model as requested
-const MODEL_NAME = "gemini-2.5-flash-lite"
+// Alias tracks the current flash-lite model, so retirements don't break the app
+const MODEL_NAME = "gemini-flash-lite-latest"
 
 // OpenAPI 3.0 schema defining the expected JSON output structure.
 // This is used to enable the model's structured output mode.
