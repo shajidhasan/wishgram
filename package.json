@@ -47,5 +47,11 @@
 		"svg2roughjs": "^3",
 		"tailwind-merge": "^3.6.0",
 		"tailwind-variants": "^3.2.2"
+	},
+	"pnpm": {
+		"overrides": {
+			"yaml@^2.0.0": "^2.9.0",
+			"flatted": "^3.4.2"
+		}
 	}
 }
